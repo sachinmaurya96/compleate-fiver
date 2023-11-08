@@ -59,15 +59,11 @@ const gigSchema = new Schema({
         type:[String],
         required:false,
     },
-    desc:{
-        type:[String],
-        required:true,
+    sales:{
+        type:Number,
+        default:0
     },
-    desc:{
-        type:String,
-        required:true,
-    },
-
+   
 
 
 
