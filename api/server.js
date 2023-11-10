@@ -8,11 +8,13 @@ import messageRoute from "./routes/message.route.js"
 import orderRoute from "./routes/order.route.js"
 import reviewRoute from "./routes/review.route.js"
 import authRoute from "./routes/auth.route.js"
-
+import cookieParser from "cookie-parser";
 const app = express()
 dotenv.config()
 mongoose.set("strictQuery", true)
 app.use(express.json())
+app.use(cookieParser())
+
 
 const connetc = async ()=>{
     try{
@@ -30,7 +32,11 @@ app.use("/api/orders",orderRoute)
 app.use("/api/conversation",ConversationRoute)
 app.use("/api/messages",messageRoute)
 app.use("/api/reviews",reviewRoute)
-
+app.use((err,req,res,next)=>{
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || "something went wrong"
+    return res.status(errorStatus).send(errorMessage)
+})
 app.listen(8080,()=>{
     connetc()
     console.log("backend server is running");
